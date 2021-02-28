@@ -1,0 +1,4 @@
+{
+    "flags": "-HnrEi",
+    "pattern": "String .{0,20}password"
+}

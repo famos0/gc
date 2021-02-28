@@ -1,0 +1,32 @@
+
+{
+    "flags": "-HnriE",
+    "patterns": [
+        "java.lang.ClassLoader.defineClass",
+        "java.net.URLClassLoader",
+        "java.beans.Instrospector.getBeanInfo",
+        "java.io.File",
+        "java.io.File.delete",
+        "java.io.File.renameTo",
+        "java.io.File.listFiles",
+        "java.io.File.list",
+        "java.io.FileInputStream",
+        "java.io.FileOutputStream",
+        "java.io.FileReader",
+        "java.io.FileWriter",
+        "java.io.RandomAccessFile",
+        "System.setProperty",
+        "System.getProperties",
+        "System.getProperty",
+        "System.load",
+        "System.loadLibrary",
+        "Runtime.exec",
+        "ProcessBuilder",
+        "java.lang.Class.getDeclaredMethod",
+        "java.lang.Class.getDeclaredField",
+        "java.lang.reflection.Method.invoke",
+        "java.lang.reflection.Field.set",
+        "java.lang.reflection.Field.get",
+        "javax.script.ScriptEngine.eval"
+    ]
+  }

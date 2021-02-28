@@ -1,0 +1,21 @@
+
+{
+    "flags": "-HnriE",
+    "patterns": [
+        "DocumentBuilderFactory",
+        "SAXParserFactory",
+        "DOM4J XML",
+        "XMLInputFactory",
+        "javax.xml.transform.TransformerFactory",
+        "javax.xml.validation.Validator",
+        "javax.xml.validation.SchemaFactory",
+        "org.xml.sax.XMLReader",
+        "javax.xml.transform.sax.SAXTransformerFactory",
+        "org.dom4j.io.SAXReader",
+        "org.jdom2.input.SAXBuilder",
+        "javax.xml.bind.Unmarshaller",
+        "javax.xml.xpath.XPathExpression",
+        "org.springframework.oxm.Jaxb2Marshaller",
+        "org.springframework.oxm.jaxb.Jaxb2Marshaller"
+    ]
+  }
