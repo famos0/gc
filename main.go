@@ -1,7 +1,7 @@
 package main
 
 import (
-	"./cmd"
+	"github.com/famos0/gc/cmd"
 )
 
 func main() {

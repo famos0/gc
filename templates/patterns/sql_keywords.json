@@ -1,4 +1,5 @@
 {
     "flags": "-HnrEi",
-    "pattern": "((SELECT.{0,100})|(FROM .{0,100})|((LEFT|RIGHT) (INNER|OUTER) JOIN .{0,100})|WHERE .{1,200})"
+    "pattern": "((SELECT.{0,100})|(FROM .{0,100})|((LEFT|RIGHT) (INNER|OUTER) JOIN .{0,100})|WHERE .{1,200})",
+    "comment": "Search for SQL keywords"
 }

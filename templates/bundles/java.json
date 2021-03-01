@@ -1,0 +1,9 @@
+{
+    "patternspath":[
+        "dangerous_functions",
+        "heap_inspection",
+        "xml_parser",
+        "concatenation",
+        "sql_keywords"
+    ]
+}

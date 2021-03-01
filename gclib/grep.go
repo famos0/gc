@@ -11,122 +11,158 @@ import (
 )
 
 type pattern struct {
-	Flags    string   `json:"flags:omitempty"`
-	Pattern  string   `json:"pattern:omitempty"`
-	Patterns []string `json:"patterns:omitempty"`
-	Comment  string   `json:"comments:omitempty"`
+	Flags    string   `json:"flags,omitempty"`
+	Pattern  string   `json:"pattern,omitempty"`
+	Patterns []string `json:"patterns,omitempty"`
+	Comment  string   `json:"comment,omitempty"`
 }
 
 type bundle struct {
-	PatternsPath []string `json:"patternspath:omitempty"`
-	Bundles      []string `json:"bundles:omitempty`
-	Comment      string   `json:"comments:omitempty"`
+	PatternsPath []string `json:"patternspath,omitempty"`
+	Bundles      []string `json:"bundles,omitempty"`
+	Comment      string   `json:"comments,omitempty"`
 }
 
-func grepPattern(patName, files string) {
+func GrepPattern(patName, files string, options *Options) {
 
 	if files == "" {
 		files = "."
 	}
 
-	patDir, err := getPatternDir()
+	patDir, err := GetPatternDir()
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "unable to open user's pattern directory")
+		if !options.Quiet {
+			fmt.Fprintln(os.Stderr, "unable to open user's pattern directory")
+		}
+
 		return
 	}
 
 	filename := filepath.Join(patDir, patName+".json")
 	f, err := os.Open(filename)
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "no such pattern")
+		if !options.Quiet {
+			fmt.Fprintln(os.Stderr, "no such pattern")
+		}
 		return
 	}
 	defer f.Close()
 
 	pat := pattern{}
 	dec := json.NewDecoder(f)
-	err = dec.Decode(&pat)
+	dec.Decode(&pat)
+	if !options.Quiet {
+		printComment("pattern", patName, pat.Comment)
+	}
 
 	if pat.Pattern == "" {
-		// check for multiple patterns
+
 		if len(pat.Patterns) == 0 {
-			fmt.Fprintf(os.Stderr, "pattern file '%s' contains no pattern(s)\n", filename)
+			if !options.Quiet {
+				fmt.Fprintf(os.Stderr, "pattern file '%s' contains no pattern(s)\n", filename)
+			}
 			return
 		}
 
 		pat.Pattern = "(" + strings.Join(pat.Patterns, "|") + ")"
 	}
 
-	var cmd *exec.Cmd
+	if options.Testless {
 
-	cmd = exec.Command("grep", pat.Flags, pat.Pattern, files)
+		var c1 *exec.Cmd
+		var c2 *exec.Cmd
 
-	cmd.Stdin = os.Stdin
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	cmd.Run()
+		c1 = exec.Command("grep", pat.Flags, pat.Pattern, files)
+		c2 = exec.Command("grep", "-vi", "(test\\|mock")
+
+		c1.Stdin = os.Stdin
+		c2.Stdin, _ = c1.StdoutPipe()
+		c2.Stdout = os.Stdout
+		c2.Stderr = os.Stderr
+
+		c2.Start()
+		c1.Run()
+		c2.Wait()
+
+	} else {
+		var cmd *exec.Cmd
+		cmd = exec.Command("grep", pat.Flags, pat.Pattern, files)
+
+		cmd.Stdin = os.Stdin
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+		cmd.Run()
+	}
 }
 
-func grepBundle(bundleName, files string) {
+func GrepBundle(bundleName, files string, options *Options) {
 
-	bundleDir, err := getPatternBundle()
+	bundleDir, err := GetBundleDir()
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "unable to open user's pattern directory")
+		if !options.Quiet {
+			fmt.Fprintln(os.Stderr, "unable to open user's pattern directory")
+		}
 		return
 	}
 
 	filename := filepath.Join(bundleDir, bundleName+".json")
 	f, err := os.Open(filename)
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "no such pattern")
+		if !options.Quiet {
+			fmt.Fprintln(os.Stderr, "no such pattern")
+		}
 		return
 	}
 	defer f.Close()
 
 	bundle := bundle{}
 	dec := json.NewDecoder(f)
-	err = dec.Decode(&bundle)
+	dec.Decode(&bundle)
+
+	if !options.Quiet {
+		printComment("bundle", bundleName, bundle.Comment)
+	}
 
 	if len(bundle.Bundles) > 0 {
 		for _, bundle := range bundle.Bundles {
-			grepBundle(bundle, files)
+			GrepBundle(bundle, files, options)
 		}
 	}
 
-	for _, pattern := range bundle.Patterns {
-		grepPattern(pattern, files)
+	for _, pattern := range bundle.PatternsPath {
+		GrepPattern(pattern, files, options)
 	}
 }
 
-func getPatternDir() (string, error) {
+func GetPatternDir() (string, error) {
 	usr, err := user.Current()
 	if err != nil {
 		return "", err
 	}
 	path := filepath.Join(usr.HomeDir, ".config/gc")
 	if _, err := os.Stat(path); !os.IsNotExist(err) {
-		// .config/gf exists
+		// .config/gc exists
 		return path, nil
 	}
-	return "../templates/patterns", nil
+	return "templates/patterns", nil
 	//return filepath.Join(usr.HomeDir, ".gc"), nil
 }
 
-func getBundleDir() (string, error) {
+func GetBundleDir() (string, error) {
 	usr, err := user.Current()
 	if err != nil {
 		return "", err
 	}
 	path := filepath.Join(usr.HomeDir, ".config/gc")
 	if _, err := os.Stat(path); !os.IsNotExist(err) {
-		// .config/gf exists
+		// .config/gc exists
 		return path, nil
 	}
-	return "../templates/bundles", nil
+	return "templates/bundles", nil
 	//return filepath.Join(usr.HomeDir, ".gc"), nil
 }
 
-func printComment(bundlename, comment string) {
-	fmt.Println("Bundle: %s", bundlename)
-	fmt.Println("%s\n", comment)
+func printComment(filetype, name, comment string) {
+	fmt.Printf("\n%s: %s\n", strings.Title(filetype), name)
+	fmt.Printf("%s\n\n", comment)
 }
