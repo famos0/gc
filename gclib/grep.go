@@ -74,7 +74,7 @@ func GrepPattern(patName, files string, options *Options) {
 		var c2 *exec.Cmd
 
 		c1 = exec.Command("grep", pat.Flags, pat.Pattern, files)
-		c2 = exec.Command("grep", "-vi", "(test\\|mock")
+		c2 = exec.Command("grep", "-vi", "(test\\|mock)")
 
 		c1.Stdin = os.Stdin
 		c2.Stdin, _ = c1.StdoutPipe()
