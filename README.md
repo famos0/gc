@@ -72,7 +72,7 @@ $ cat fruits/leftovers.json
 }
 $ gc pattern fruits/leftovers .
 
-# THE COMMAND LAUNCH WILL BE 
+# THE COMMAND LAUNCHED WILL BE 
 grep -HnriE "(todo|to do|fixme|fix me|tofix|to fix|comment|debug)"
 ```
 
