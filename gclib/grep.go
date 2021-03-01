@@ -23,6 +23,7 @@ type bundle struct {
 	Comment      string   `json:"comment,omitempty"`
 }
 
+// GrepPattern throw a gc pattern
 func GrepPattern(patName, files string, options *Options) {
 
 	if files == "" {
@@ -51,7 +52,7 @@ func GrepPattern(patName, files string, options *Options) {
 	pat := pattern{}
 	dec := json.NewDecoder(f)
 	dec.Decode(&pat)
-	
+
 	if !options.Quiet {
 		printComment("pattern", patName, pat.Comment)
 	}
@@ -76,26 +77,34 @@ func GrepPattern(patName, files string, options *Options) {
 		c1 = exec.Command("grep", pat.Flags, pat.Pattern, files)
 		c2 = exec.Command("grep", "-vi", "(test\\|mock)")
 
-		c1.Stdin = os.Stdin
-		c2.Stdin, _ = c1.StdoutPipe()
-		c2.Stdout = os.Stdout
-		c2.Stderr = os.Stderr
+		if options.Stdin {
+			fmt.Printf("%s | %s\n", c1.String(), c2.String())
+		} else {
+			c1.Stdin = os.Stdin
+			c2.Stdin, _ = c1.StdoutPipe()
+			c2.Stdout = os.Stdout
+			c2.Stderr = os.Stderr
 
-		c2.Start()
-		c1.Run()
-		c2.Wait()
-
+			c2.Start()
+			c1.Run()
+			c2.Wait()
+		}
 	} else {
 		var cmd *exec.Cmd
 		cmd = exec.Command("grep", pat.Flags, pat.Pattern, files)
 
-		cmd.Stdin = os.Stdin
-		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stderr
-		cmd.Run()
+		if options.Stdin {
+			fmt.Println(cmd.String())
+		} else {
+			cmd.Stdin = os.Stdin
+			cmd.Stdout = os.Stdout
+			cmd.Stderr = os.Stderr
+			cmd.Run()
+		}
 	}
 }
 
+// GrepBundle throw a gc Bundle
 func GrepBundle(bundleName, files string, options *Options) {
 
 	bundleDir, err := GetBundleDir()
@@ -135,6 +144,7 @@ func GrepBundle(bundleName, files string, options *Options) {
 	}
 }
 
+// GetPatternDir return pattern directory
 func GetPatternDir() (string, error) {
 	usr, err := user.Current()
 	if err != nil {
@@ -149,6 +159,7 @@ func GetPatternDir() (string, error) {
 	//return filepath.Join(usr.HomeDir, ".gc"), nil
 }
 
+// GetBundleDir return bundle directory
 func GetBundleDir() (string, error) {
 	usr, err := user.Current()
 	if err != nil {

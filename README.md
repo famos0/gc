@@ -20,6 +20,7 @@ Available Commands:
 Flags:
   -h, --help       help for gc
   -q, --quiet      Don't print Patterns and Bundles name and comment
+  -s, --stdin      Display generated grep command instead of running them
   -t, --testless   Don't grep test/mock code
 
 Use "gc [command] --help" for more information about a command.
