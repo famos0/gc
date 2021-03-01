@@ -1,0 +1,5 @@
+{
+    "flags": "-HnriE",
+    "pattern": "[^0-9][ ]*\\+[ ]*[^0-9]",
+    "comment": "Search for concatenations"
+}

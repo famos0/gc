@@ -1,9 +1,11 @@
 {
     "patternspath":[
-        "dangerous_functions",
-        "heap_inspection",
-        "xml_parser",
-        "concatenation",
-        "sql_keywords"
-    ]
+        "java/dangerous_functions",
+        "java/heap_inspection",
+        "java/xml_parser"
+    ],
+    "bundles": [
+        "find-fruits"
+    ],
+    "comment":"Java classic bundle"
 }

@@ -28,5 +28,6 @@
         "java.lang.reflection.Field.set",
         "java.lang.reflection.Field.get",
         "javax.script.ScriptEngine.eval"
-    ]
+    ],
+    "comment": "Dangerous functions in Java"
   }

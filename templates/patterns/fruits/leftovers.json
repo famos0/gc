@@ -1,0 +1,14 @@
+{
+  "flags": "-HnriE",
+  "patterns": [
+    "todo",
+    "to do",
+    "fixme",
+    "fix me",
+    "tofix",
+    "to fix",
+    "comment",
+    "debug"
+  ],
+  "comment":"Hunt for leftovers from developers"
+}

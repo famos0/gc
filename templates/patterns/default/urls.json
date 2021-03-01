@@ -1,0 +1,5 @@
+{
+	"flags": "-oriahE",
+	"pattern": "https?://[^\"\\'> ]+",
+  "comment": "Collect urls"
+}

@@ -1,0 +1,13 @@
+{
+  "flags": "-HnriE",
+  "patterns": [
+    "md4",
+    "md5",
+    "des",
+    "sha1",
+    "sha-1",
+    "rot13",
+    "ecb"
+  ],
+  "comment":"Hunt for weak cipher algo"
+}

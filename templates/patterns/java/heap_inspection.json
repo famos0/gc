@@ -1,4 +1,5 @@
 {
     "flags": "-HnrEi",
-    "pattern": "String .{0,20}password"
+    "pattern": "String .{0,20}password",
+    "comment": "Hunt for heap inspections vulnerability (don't want an empty report)"
 }

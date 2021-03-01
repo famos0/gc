@@ -20,7 +20,7 @@ type pattern struct {
 type bundle struct {
 	PatternsPath []string `json:"patternspath,omitempty"`
 	Bundles      []string `json:"bundles,omitempty"`
-	Comment      string   `json:"comments,omitempty"`
+	Comment      string   `json:"comment,omitempty"`
 }
 
 func GrepPattern(patName, files string, options *Options) {
@@ -51,6 +51,7 @@ func GrepPattern(patName, files string, options *Options) {
 	pat := pattern{}
 	dec := json.NewDecoder(f)
 	dec.Decode(&pat)
+	
 	if !options.Quiet {
 		printComment("pattern", patName, pat.Comment)
 	}

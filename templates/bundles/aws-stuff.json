@@ -1,0 +1,7 @@
+{
+  "patternspath":[
+      "aws/aws-keys",
+      "aws/s3-buckets"
+  ],
+  "comment":"AWS keys and S3 Buckets"
+}

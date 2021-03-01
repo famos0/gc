@@ -1,0 +1,8 @@
+{
+  "flags": "-hroiaE",
+  "patterns": [
+      "\"[^\"]+\"",
+      "'[^']+'"
+  ],
+  "comment":"Collect Strings"
+}

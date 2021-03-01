@@ -1,0 +1,8 @@
+{
+  "patternspath":[
+      "default/strings",
+      "default/ip",
+      "default/urls"
+  ],
+  "comment":"Classic strings and legit (maybe not) stuffs"
+}

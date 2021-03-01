@@ -1,0 +1,8 @@
+{
+  "patternspath":[
+      "fruits/leftovers",
+      "fruits/passwords",
+      "fruits/weak_cipher"
+  ],
+  "comment":"Hunt for classic mistakes in code"
+}

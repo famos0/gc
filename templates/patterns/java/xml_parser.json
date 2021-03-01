@@ -17,5 +17,6 @@
         "javax.xml.xpath.XPathExpression",
         "org.springframework.oxm.Jaxb2Marshaller",
         "org.springframework.oxm.jaxb.Jaxb2Marshaller"
-    ]
+    ],
+    "comment": "Show empty xml parsers. Need to check if they are correctly implemented"
   }
