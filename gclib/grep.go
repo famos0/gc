@@ -155,7 +155,7 @@ func GetPatternDir() (string, error) {
 		// .config/gc exists
 		return path, nil
 	}
-	return "templates/patterns", nil
+	return "~/.gc/templates/patterns", nil
 	//return filepath.Join(usr.HomeDir, ".gc"), nil
 }
 
@@ -170,7 +170,7 @@ func GetBundleDir() (string, error) {
 		// .config/gc exists
 		return path, nil
 	}
-	return "templates/bundles", nil
+	return "~/.gc/templates/bundles", nil
 	//return filepath.Join(usr.HomeDir, ".gc"), nil
 }
 
